@@ -8,9 +8,13 @@ router.get('/recipe', function(req, res) {
 	})
 });
 router.get('/', function(req, res) {
-	res.render('index',{
-		title: "Hello tuan! BTL_CSDL"
+	models.Ingredients.findAllIngredient(function (ingredients) {
+		res.render('index',{
+			title: "Insert Recipe",
+			Ingredients : ingredients
+		})
 	})
+
 });
 router.get('/food', function(req, res) {
 	models.Foodcategories.findFood(req.param.a,function (food) {

@@ -16,6 +16,9 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                Ingredient.hasMany(models.Recipeingredients);
+            },
+            findAllIngredient : function (callback) {
+                Ingredient.findAll({}).then(callback);
             }
         }
     });
