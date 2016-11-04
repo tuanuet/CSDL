@@ -16,7 +16,6 @@ module.exports = function(sequelize, DataTypes) {
         Vegetarian: DataTypes.INTEGER,
         NumberOfServings : DataTypes.INTEGER,
         TimeToPrepare: DataTypes.INTEGER,
-        NutritionallInformation: DataTypes.TEXT,
         CaloriesPerServing: DataTypes.INTEGER,
         NutritionalInformation: DataTypes.TEXT,
         Instructions: DataTypes.TEXT,
