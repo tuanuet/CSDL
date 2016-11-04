@@ -7,6 +7,11 @@ router.get('/recipe', function(req, res) {
 		res.json(recipe)
 	})
 });
+router.get('/', function(req, res) {
+	res.render('index',{
+		title: "Hello tuan! BTL_CSDL"
+	})
+});
 router.get('/food', function(req, res) {
 	models.Foodcategories.findFood(req.param.a,function (food) {
 		res.json(food)
