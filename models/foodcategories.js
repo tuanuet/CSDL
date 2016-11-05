@@ -15,10 +15,34 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function(models) {
-                // Foodcategories.hasMany(models.Recipes);
+                 Foodcategories.hasMany(models.Recipes);
             },
-            findFood: function(name,callback){
+            findFood: function(callback){
                 Foodcategories.findAll({}).then(callback);
+            },
+            findFoodCategory : function (name,models,callback) {
+                console.log(name)
+                Foodcategories.findAll({
+                    where : {FoodCategory: name},
+                    include : [
+                        {
+                            model : models.Recipes,
+                            attributes : ['RecipeName','RecipeDescription','NumberOfServings','CaloriesPerServing'],
+                            include : [
+                                {
+                                    model : models.Recipeingredients,
+                                    attributes : ['Quantity','Comments'],
+                                    include : [
+                                        {
+                                            model : models.Ingredients,
+                                            attributes: ['Ingredient']
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }).then(callback)
             }
         }
 

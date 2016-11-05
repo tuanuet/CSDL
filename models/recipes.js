@@ -24,16 +24,45 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function(models) {
-                // Recipe.hasMany(models.Recipeingredients);
-                // Recipe.belongsTo(models.Foodcategories, {
-                //     onDelete: "CASCADE",
-                //     foreignKey: {
-                //         allowNull: false
-                //     }
-                // });
+                Recipe.hasMany(models.Recipeingredients);
+                Recipe.belongsTo(models.Foodcategories, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
             },
             findRecipe: function(id,callback){
                 Recipe.findAll({}).then(callback);
+            },
+            findAllRecipe : function (models,callback) {
+                Recipe.findAll({
+                    attributes: ['idRecipe','RecipeName','Source','NumberOfServings','TimeToPrepare','CaloriesPerServing'],
+                    include : [
+                        {
+                            model: models.Foodcategories,
+                            attributes : ['FoodCategory']
+                        }
+                    ]
+                }).then(callback)
+            },
+            findRecipeById : function (id,models,callback) {
+                Recipe.findAll({
+                    where: {idRecipe : id},
+                    include : [
+                        {
+                            model: models.Foodcategories
+                        },
+                        {
+                            model : models.Recipeingredients,
+                            include : [
+                                {
+                                    model : models.Ingredients
+                                }
+                            ]
+                        }
+                    ]
+                }).then(callback)
             }
         }
     });

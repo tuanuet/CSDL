@@ -16,6 +16,36 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function(models) {
+                Recipeingredient.belongsTo(models.Recipes, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
+                Recipeingredient.belongsTo(models.Ingredients, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
+            },
+            findAllRecipeIngredient : function (name,models,callback) {
+                console.log(name)
+                Recipeingredient.findAll({
+                    include : [
+                        { model : models.Ingredients,attributes : ['Ingredient']},
+                        { model :
+                            models.Recipes,
+                            attributes :
+                                ['RecipeName','RecipeDescription','NumberOfServings','CaloriesPerServing'],
+                            include: [
+                                {
+                                    model: models.Foodcategories,
+                                    where :{FoodCategory: name},
+                                    attributes: ['FoodCategory']
+                                }]}
+                    ]
+                }).then(callback)
             }
 
         }

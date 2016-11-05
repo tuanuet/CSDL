@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/allfood.css' />
+</head>
+<body>
+<div class="container">
+    <h2><%= title%></h2>
+    <div class="row">
+        <table class="table">
+            <thead class="thead-default">
+            <tr>
+                <th>Loại</th>
+                <th>Tên món</th>
+                <th>Thời gian</th>
+                <th>Lượng Calo</th>
+                <th>Suất</th>
+                <th>Tác giả</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for(var i=0; i<Recipes.length; i++) { %>
+                <tr>
+                    <td><%= Recipes[i].Foodcategory.FoodCategory%></td>
+                    <td><%= Recipes[i].RecipeName%></td>
+                    <td><%= Recipes[i].TimeToPrepare%></td>
+                    <td><%= Recipes[i].CaloriesPerServing%></td>
+                    <td><%= Recipes[i].NumberOfServings%></td>
+                    <td><%= Recipes[i].Source%></td>
+                    <td><a class="btn btn-primary" href="/food?id=<%= Recipes[i].idRecipe%>">Chi tiết</a></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script type="text/javascript" src="/javascripts/js/bootstrap.min.js"></script>
+</body>
+</html>

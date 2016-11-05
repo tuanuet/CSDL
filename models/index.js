@@ -20,17 +20,9 @@ fs
 
 Object.keys(db).forEach(function(modelName) {
   if ("associate" in db[modelName]) {
-    console.log(db)
     db[modelName].associate(db);
   }
 });
-// db.foodcategories.associate(db.recipes)
-// db.ingredients.associate(db.recipeingredients)
-// db[recipes].associate(db[recipeingredients])
-// db[recipes].associate(db[foodcategories])
-// db[recipeingredients].associate(db[ingredients])
-// db[recipeingredients].associate(db[recipes])
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
