@@ -4,6 +4,7 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/css/bootstrap.min.css' />
+
     <script type="text/javascript" src="/javascripts/js/jquery-3.1.1.min.js"></script>
   </head>
   <body>
@@ -32,7 +33,7 @@
             </div>
           <div class="form-group">
               <label for="instructions">Công thức món ăn</label>
-              <textarea class="form-control" id="instructions" rows="3" name="instructions"></textarea>
+              <textarea class="form-control" id="instructions" rows="3" name="Instructions"></textarea>
             </div>
           <div class="form-group ">
             <label for="instructions">Vegeterian:</label>
@@ -43,18 +44,26 @@
             <input type="radio" class="form-check-input" name="Vegeterian" id="Vegeterian2" value="0">
             <label class="form-check-label">Không</label>
 
+          </div>
+            <div class="form-group">
+                <label for="Source">Tác giả</label>
+                <input type="text" class="form-control" id="Source" name="Source" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="Utensils">Công cụ</label>
+                <input type="text" class="form-control" id="Utensils" name="Utensils" placeholder="">
             </div>
           <div class="form-group">
               <label for="NumberOfServings">Số lượng khách hàng</label>
               <input type="number" min="1" value="1" class="form-control" id="NumberOfServings" name="NumberOfServings" placeholder="example 6">
             </div>
           <div class="form-group">
-              <label for="CaloriesPerServings">Lượng calories</label>
-              <input type="number" min="1" value="100" class="form-control" id="CaloriesPerServings"name="CaloriesPerServings" placeholder="example 600 for frid-chicken">
+              <label for="CaloriesPerServing">Lượng calories</label>
+              <input type="number" min="1" value="100" class="form-control" id="CaloriesPerServing"name="CaloriesPerServing" placeholder="example 600 for frid-chicken">
             </div>
           <div class="form-group">
               <label for="NutritionallInformation">Giá trị năng lượng món ăn</label>
-              <input type="text" class="form-control" id="NutritionallInformation" name="NutritionallInformation" placeholder="High nutrition">
+              <input type="text" class="form-control" id="NutritionalInformation" name="NutritionalInformation" placeholder="High nutrition">
           </div>
         </div>
 
@@ -88,6 +97,7 @@
       </form>
     </div>
   </div>
+
   <script type="text/javascript" src="/javascripts/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/javascripts/themthucan.js"></script>
 

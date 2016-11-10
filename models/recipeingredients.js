@@ -47,7 +47,6 @@ module.exports = function(sequelize, DataTypes) {
                     ]
                 }).then(callback)
             }
-
         }
     });
 

@@ -19,7 +19,8 @@ module.exports = function(sequelize, DataTypes) {
         CaloriesPerServing: DataTypes.INTEGER,
         NutritionalInformation: DataTypes.TEXT,
         Instructions: DataTypes.TEXT,
-        Utensils: DataTypes.TEXT
+        Utensils: DataTypes.TEXT,
+        FoodcategoryIdFoodCategories:DataTypes.INTEGER
     }, {
         timestamps: false,
         classMethods: {
@@ -62,6 +63,23 @@ module.exports = function(sequelize, DataTypes) {
                             ]
                         }
                     ]
+                }).then(callback)
+            },
+            insertRecipe : function (recipe,callback) {
+                Recipe.findOrCreate({
+                    where : {
+                        RecipeName: recipe.RecipeName,
+                        RecipeDescription: recipe.RecipeDescription,
+                        Source: recipe.Source,
+                        Vegetarian:recipe.Vegetarian ,
+                        NumberOfServings : recipe.NumberOfServings,
+                        TimeToPrepare: recipe.TimeToPrepare,
+                        CaloriesPerServing: recipe.CaloriesPerServing,
+                        NutritionalInformation: recipe.NutritionalInformation,
+                        Instructions: recipe.Instructions,
+                        Utensils: recipe.Utensils,
+                        FoodcategoryIdFoodCategories : recipe.FoodcategoryIdFoodCategories
+                    }
                 }).then(callback)
             }
         }

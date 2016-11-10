@@ -19,6 +19,13 @@ module.exports = function(sequelize, DataTypes) {
             },
             findAllIngredient : function (callback) {
                 Ingredient.findAll({}).then(callback);
+            },
+            findIngredientByName : function (name,callback) {
+                Ingredient.findOne({
+                    where :{
+                        Ingredient : name
+                    }
+                }).then(callback)
             }
         }
     });

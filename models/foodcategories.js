@@ -43,6 +43,11 @@ module.exports = function(sequelize, DataTypes) {
                         }
                     ]
                 }).then(callback)
+            },
+            insertFoodCategory : function (name,callback) {
+                Foodcategories.findOrCreate({
+                    where : {FoodCategory: name}
+                }).then(callback)
             }
         }
 
