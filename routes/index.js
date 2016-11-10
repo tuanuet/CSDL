@@ -52,17 +52,20 @@ function insertRecipe(food,req,res,next) {
 
 }
 function findIngredientByName(recipe,req,res,next) {
-	console.log(recipe)
-	models.Ingredients.findIngredientByName(req.body.Ingredient,function (ingredient) {
+	var names = new Array();
+	//dua tat ca ca Ingredient name vao mang name
+	names.push(req.body.Ingredient)
+	console.log(names)
+	models.Ingredients.findIngredientByName(names,function (ingredient) {
 		var Obj = {
 			idRecipe : recipe[0].dataValues.idRecipe,
-			idIngredient : ingredient.dataValues.idIngredient
+			Ingredient : ingredient
 		}
 		return next(Obj);
 	})
 }
 function insertToRecipeIngredient(data,req,res,next) {
-	console.log(data)
+	console.log(data.Ingredient[0].dataValues)
 	return next();
 }
 

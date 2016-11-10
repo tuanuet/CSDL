@@ -20,10 +20,12 @@ module.exports = function(sequelize, DataTypes) {
             findAllIngredient : function (callback) {
                 Ingredient.findAll({}).then(callback);
             },
-            findIngredientByName : function (name,callback) {
-                Ingredient.findOne({
+            findIngredientByName : function (names,callback) {
+                Ingredient.findAll({
                     where :{
-                        Ingredient : name
+                        Ingredient : {
+                            $or:names
+                        }
                     }
                 }).then(callback)
             }
