@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
                 }).then(callback)
             },
             findRecipeById : function (id,models,callback) {
-                Recipe.findAll({
+                Recipe.findOne({
                     where: {idRecipe : id},
                     include : [
                         {
@@ -80,6 +80,11 @@ module.exports = function(sequelize, DataTypes) {
                         Utensils: recipe.Utensils,
                         FoodcategoryIdFoodCategories : recipe.FoodcategoryIdFoodCategories
                     }
+                }).then(callback)
+            },
+            deleteRecipe : function (id,callback) {
+                Recipe.destroy({
+                    where : {idRecipe : id}
                 }).then(callback)
             }
         }

@@ -11,7 +11,9 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true // Automatically gets converted to SERIAL for postgres
         },
         Quantity: DataTypes.INTEGER,
-        Comments : DataTypes.STRING(45)
+        Comments : DataTypes.STRING(45),
+        RecipeIdRecipe : DataTypes.INTEGER,
+        IngredientIdIngredient : DataTypes.INTEGER
     }, {
         timestamps: false,
         classMethods: {
@@ -46,6 +48,40 @@ module.exports = function(sequelize, DataTypes) {
                                 }]}
                     ]
                 }).then(callback)
+            },
+            insertRecipeIngredients : function (data,callback) {
+
+                for(var i=0;i<data.length;i++){
+                    Recipeingredient.findOrCreate({
+                        where : {
+                            IngredientIdIngredient : data[i].IngredientIdIngredient,
+                            RecipeIdRecipe : data[i].RecipeIdRecipe,
+                            Comments : data[i].Comments, //comment va quantity lay trong mang
+                            Quantity: data[i].Quantity
+                        }
+                    }).then(function (recipeIngredient) {
+                        if(i==data.length){
+                            callback(recipeIngredient,true)
+                        }else {
+                            callback(recipeIngredient,false)
+                        }
+                    })
+                }
+
+            },
+            deleteRecipeIngredients : function (ids,callback) {
+                for(var i=0;i<ids.length;i++){
+                    Recipeingredient.destroy({
+                        where : {idrecipeIngredient : ids[i]}
+                    })
+                    .then(function(recipeIngredient) {
+                        if(i==ids.length){
+                            callback(recipeIngredient,true)
+                        }else {
+                            callback(recipeIngredient,false)
+                        }
+                    })
+                }
             }
         }
     });

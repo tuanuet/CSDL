@@ -2,6 +2,17 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
+
+router.get('/', function(req, res) {
+	models.Ingredients.findAllIngredient(function (ingredients) {
+		res.render('Themthucan',{
+			title: "Insert Recipe",
+			Ingredients : ingredients
+		})
+	})
+
+});
+
 router.get('/recipe', function(req, res) {
   	models.Recipes.findRecipe(req.param.a,function (recipe) {
 		res.json(recipe)
@@ -13,6 +24,7 @@ router.get('/recipe', function(req, res) {
 * B2: Insert Recipe xem co ko ? neu co thi tra ve 304, neu ko thi => b3
 * B3: Tim kiem All Ingredient lay ra id de thuc hien B4
 * B4: Insert vao bang RecipeIngredient vs 2 tham so idRecipe vs idIngredient
+* B5: send 1 json stuatus ve
 * */
 router.post('/insert',insertFoodCate,insertRecipe,findIngredientByName,insertToRecipeIngredient,function(req, res) {
 	res.send("ok")
@@ -20,13 +32,7 @@ router.post('/insert',insertFoodCate,insertRecipe,findIngredientByName,insertToR
 function insertFoodCate(req,res,next) {
 
 	models.Foodcategories.insertFoodCategory(req.body.FoodCategories,function (food) {
-		if(food[1]){
-			return next(food);
-		}
-		else {
-			res.json({msg : "ton tai foodCate",status : 304})
-		}
-
+		return next(food);
 	})
 }
 function insertRecipe(food,req,res,next) {
@@ -55,6 +61,7 @@ function findIngredientByName(recipe,req,res,next) {
 	var names = new Array();
 	//dua tat ca ca Ingredient name vao mang name
 	names.push(req.body.Ingredient)
+	
 	console.log(names)
 	models.Ingredients.findIngredientByName(names,function (ingredient) {
 		var Obj = {
@@ -65,21 +72,54 @@ function findIngredientByName(recipe,req,res,next) {
 	})
 }
 function insertToRecipeIngredient(data,req,res,next) {
-	console.log(data.Ingredient[0].dataValues)
-	return next();
-}
-
-
-
-router.get('/', function(req, res) {
-	models.Ingredients.findAllIngredient(function (ingredients) {
-		res.render('Themthucan',{
-			title: "Insert Recipe",
-			Ingredients : ingredients
-		})
+	var Ingredients = data.Ingredient;
+	var dataValidate = new Array();
+	for(var i=0;i<Ingredients.length;i++){
+		var RecordRecipeIngredients = {
+			IngredientIdIngredient: Ingredients[i].dataValues.idIngredient,
+			RecipeIdRecipe: data.idRecipe,
+			Comments: req.body.Comments, //comment va quantity lay trong mang
+			Quantity: req.body.Quantity
+		}
+		dataValidate.push(RecordRecipeIngredients)
+	}
+	models.Recipeingredients.insertRecipeIngredients(dataValidate,function (RecipeIngredient,isLast) {
+		if(isLast == true){
+			console.log("Insert thanh cong")
+		}
+		return next();
 	})
 
-});
+}
+
+/*
+ * lam theo tung con doan
+ * B1: delete bang RecipeIngredient with id
+ * B2: Delete Recipe with id
+ * B3: send 1 status ve
+ */
+router.post('/delete',deleteRecipeIngredient,deleteRecipe,function (req,res) {
+	res.json({
+		status : 200,
+		msg : "Delete thanh cong"
+	})
+})
+function deleteRecipeIngredient(req,res,next) {
+	var ids = new Array();
+	ids.push(37)
+	models.Recipeingredients.deleteRecipeIngredients(ids,function (recipeIngredient,isLast) {
+		if(isLast==true){
+			console.log(recipeIngredient)
+			return next();
+		}
+	})
+}
+function deleteRecipe(req,res,next) {
+	var idRecipe = 41
+	models.Recipes.deleteRecipe(idRecipe,function (arg1,arg2) {
+		return next();
+	})
+}
 router.get('/food', function(req, res) {
     var idRecipe = req.query.id;
     console.log(idRecipe)
