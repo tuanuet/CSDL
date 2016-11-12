@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2016 at 04:25 AM
+-- Generation Time: Nov 10, 2016 at 01:02 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -97,8 +97,8 @@ INSERT INTO `ingredients` (`idIngredient`, `Ingredient`) VALUES
 
 CREATE TABLE `recipeingredients` (
   `idrecipeIngredient` int(11) NOT NULL,
-  `recipeID` int(11) DEFAULT NULL,
-  `IngredientID` int(11) DEFAULT NULL,
+  `RecipeIdRecipe` int(11) DEFAULT NULL,
+  `IngredientIdIngredient` int(11) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
   `Comments` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -107,7 +107,7 @@ CREATE TABLE `recipeingredients` (
 -- Dumping data for table `recipeingredients`
 --
 
-INSERT INTO `recipeingredients` (`idrecipeIngredient`, `recipeID`, `IngredientID`, `Quantity`, `Comments`) VALUES
+INSERT INTO `recipeingredients` (`idrecipeIngredient`, `RecipeIdRecipe`, `IngredientIdIngredient`, `Quantity`, `Comments`) VALUES
 (1, 1, 7, 6, 'cut in pieces'),
 (2, 1, 9, 2, 'cut in small pieces'),
 (3, 1, 15, 2, 'pinch'),
@@ -149,7 +149,7 @@ CREATE TABLE `recipes` (
   `RecipeName` varchar(45) DEFAULT NULL,
   `RecipeDescription` varchar(45) DEFAULT NULL,
   `Source` varchar(45) DEFAULT NULL,
-  `FoodCategoryID` int(11) DEFAULT NULL,
+  `FoodcategoryIdFoodCategories` int(11) DEFAULT NULL,
   `Vegetarian` tinyint(1) DEFAULT NULL,
   `TimeToPrepare` int(11) DEFAULT NULL,
   `NumberOfServings` int(11) DEFAULT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`idRecipe`, `RecipeName`, `RecipeDescription`, `Source`, `FoodCategoryID`, `Vegetarian`, `TimeToPrepare`, `NumberOfServings`, `CaloriesPerServing`, `NutritionalInformation`, `Instructions`, `Utensils`) VALUES
+INSERT INTO `recipes` (`idRecipe`, `RecipeName`, `RecipeDescription`, `Source`, `FoodcategoryIdFoodCategories`, `Vegetarian`, `TimeToPrepare`, `NumberOfServings`, `CaloriesPerServing`, `NutritionalInformation`, `Instructions`, `Utensils`) VALUES
 (1, 'Chicken Soup', 'Great Meal!', 'Nancy', 4, 0, 45, 8, 300, 'Very nutritional.', 'Fill a big pot with water. Bring to boil, add salt and pepper. Add chicken, potatoes, and carrots. Reduce heat and simmer for 1 hour until chicken is tender.', NULL),
 (2, 'Black Beans', 'Can be combined with rice', 'Dad', 5, 1, 90, 6, 400, 'Very good for the kids.', 'Soak the black beans overnight. In a big pot, add 15 cups of cold water, with cumin, salt, pepper, garlic, & onions. Bring it to boil. Add the black beans without the water used to soak them. Reduce heat & simmer until blackbeans are tender.', NULL),
 (3, 'Gambas al Ajillo (Shrimp with Garlic)', 'Very good Spanish dish', 'Mom', 2, 0, 15, 4, 500, 'Good source of protein and fun to prepare.', 'In a small container, mix paprika, hot sauce, tomato paste, salt, cayenne pepper, and dry sherry. In a skillet, heat the garlic with olive oil for 1 minute. Add shrimp and mixture and cook until shrimp is pink. Serve hot.', NULL),
@@ -191,15 +191,15 @@ ALTER TABLE `ingredients`
 --
 ALTER TABLE `recipeingredients`
   ADD PRIMARY KEY (`idrecipeIngredient`),
-  ADD KEY `id_recipe_idx` (`recipeID`),
-  ADD KEY `id_ingredient_idx` (`IngredientID`);
+  ADD KEY `id_recipe_idx` (`RecipeIdRecipe`),
+  ADD KEY `id_ingredient_idx` (`IngredientIdIngredient`);
 
 --
 -- Indexes for table `recipes`
 --
 ALTER TABLE `recipes`
   ADD PRIMARY KEY (`idRecipe`),
-  ADD KEY `id_foodCategory_idx` (`FoodCategoryID`);
+  ADD KEY `id_foodCategory_idx` (`FoodcategoryIdFoodCategories`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -209,7 +209,7 @@ ALTER TABLE `recipes`
 -- AUTO_INCREMENT for table `foodcategories`
 --
 ALTER TABLE `foodcategories`
-  MODIFY `idFoodCategories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idFoodCategories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `ingredients`
 --
@@ -224,7 +224,7 @@ ALTER TABLE `recipeingredients`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `idRecipe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idRecipe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- Constraints for dumped tables
 --
@@ -233,14 +233,14 @@ ALTER TABLE `recipes`
 -- Constraints for table `recipeingredients`
 --
 ALTER TABLE `recipeingredients`
-  ADD CONSTRAINT `id_ingredient` FOREIGN KEY (`IngredientID`) REFERENCES `ingredients` (`idIngredient`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_recipe` FOREIGN KEY (`recipeID`) REFERENCES `recipes` (`idRecipe`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `id_ingredient` FOREIGN KEY (`IngredientIdIngredient`) REFERENCES `ingredients` (`idIngredient`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_recipe` FOREIGN KEY (`RecipeIdRecipe`) REFERENCES `recipes` (`idRecipe`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `recipes`
 --
 ALTER TABLE `recipes`
-  ADD CONSTRAINT `id_foodCategory` FOREIGN KEY (`FoodCategoryID`) REFERENCES `foodcategories` (`idFoodCategories`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `id_foodCategory` FOREIGN KEY (`FoodcategoryIdFoodCategories`) REFERENCES `foodcategories` (`idFoodCategories`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
