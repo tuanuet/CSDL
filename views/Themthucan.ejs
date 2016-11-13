@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/css/bootstrap.min.css' />
-
-    <script type="text/javascript" src="/javascripts/js/jquery-3.1.1.min.js"></script>
-  </head>
-  <body>
-  <div class="container">
-    <h2>Tạo món ăn mới</h2>
-
+<% include header %>
     <div class="row">
-      <form action="/insert" method="post" id="form">
+      <form action="/showjson" method="post" id="recipe-form">
         <div class="col-md-7 left">
           <div class="form-group">
               <label for="recipename">Tên thức ăn</label>
@@ -66,40 +54,54 @@
               <input type="text" class="form-control" id="NutritionalInformation" name="NutritionalInformation" placeholder="High nutrition">
           </div>
         </div>
+        <!--Thành phần của món ăn -->
+        <div class="col-md-4 first" style="margin-bottom: 5px;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nguyên Liệu</th>
+                <th>Số lượng</th>
+                <th> Chế biến</th>
+              </tr>
+           </thead>
+           <tbody>
 
-        <div class="col-md-4 first">
+           </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-4 first"  id="addIngredient-form">
           <div class="form-group">
             <div class="row">
               <div class="col-md-7">
                   <label>Nguyên liệu</label>
-                  <select class="form-control" name="Ingredient">
+                  <select class="form-control" name="ingredient" id="ingredient">
                     <% for(var i=0; i<Ingredients.length; i++) { %>
                     <option><%= Ingredients[i].Ingredient %></option>
                     <% } %>
                   </select>
-                </div>
+              </div>
               <div class="col-md-5">
                 <label>Số lượng</label>
-                <input type="number" min="1" class="form-control" name="Quantity" placeholder="example 6">
+                <input type="number" min="1" class="form-control" name="Quantity" placeholder="example 6" id="quantity">
               </div>
               <div class="clearfix"></div>
             </div>
-          </div>
-          <div class="form-group">
-              <label>Chế biến thành phần</label>
-              <input type="text" class="form-control" name="Comments" placeholder="cắt hạt lựu">
-            </div>
         </div>
-
+        <div class="form-group">
+            <label>Chế biến thành phần</label>
+            <input type="text" class="form-control" id="comments" placeholder="cắt hạt lựu">
+        </div>
+        </div>
         <button type="button" class="btn btn-primary col-md-4 right" id="addIngredient">Thêm nguyên liệu</button>
+        <!-- end thành phần -->
         <div class="clearfix"></div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="submitRecipe">Submit</button>
       </form>
     </div>
   </div>
 
   <script type="text/javascript" src="/javascripts/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/javascripts/themthucan.js"></script>
-
-  </body>
-</html>
+  <script type="text/javascript" src="/javascripts/form-handler.js"></script>
+<!--  <script type="text/javascript" src="/javascripts/themthucan.js"></script> -->
+  <% include footer %>

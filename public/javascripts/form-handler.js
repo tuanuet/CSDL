@@ -1,0 +1,74 @@
+var listIngredient = new Array();
+
+$(document).ready(function() {
+  $('#submitButton').click(submitRecipeToDB);
+  $('#addIngredient').click(addIngredientToRecipe);
+});
+
+/*
+* post data to server
+*/
+function submitRecipeToDB(evt) {
+     var testForm = document.getElementById('recipe-form');
+      //prevent form submission
+      evt.preventDefault();
+      evt.stopPropagation();
+      alert(listIngredient);
+      var recipe = {
+    		RecipeName: document.getElementById('recipeName'),
+    		RecipeDescription: document.getElementById('RecipeDescription'),
+    		Source: document.getElementById('Source'),
+    		Vegetarian: parseInt(document.getElementById('Vegeterian')),
+    		NumberOfServings : document.getElementById('NumberOfServings'),
+    		TimeToPrepare: document.getElementById('TimeToPrepare'),
+    		CaloriesPerServing: document.getElementById('CaloriesPerServing'),
+    		NutritionalInformation: document.getElementById('NutritionalInformation'),
+    		Instructions: document.getElementById('Instructions'),
+    		Utensils: document.getElementById('Utensils'),
+    		list : new Array(),
+    	}
+
+      //make the AJAX call
+      $.ajax({
+        url: '/showjson',
+				type: 'POST',
+        data: JSON.stringify(recipe),
+			  contentType: 'application/json',
+        url: 'http://localhost:3000/showjson',
+        success: function(data) {
+                console.log('success');
+                console.log(JSON.stringify(recipe));
+        }
+      });
+  }
+
+  function addIngredientToRecipe(evt) {
+    var form_ingredient = document.getElementById('addIngredient-form');
+    var ingre = document.getElementById('ingredient');
+    if (document.getElementById('quantity').value != "") {
+      if (!containsIngredient(ingre.selectedIndex, listIngredient)) {
+        var row = '<tr><th scope="row">' + ingre.options[ingre.selectedIndex].innerHTML
+                  + '</th><td>'+ document.getElementById('quantity').value
+                  + '</td><td>'+ document.getElementById('comments').value
+                  + ' </td></tr>';
+        listIngredient.push({
+            idrecipeIngredient: ingre.selectedIndex,
+            Quantity: document.getElementById('quantity').value ,
+            Comments: document.getElementById('comments').value
+        });
+        $("tbody").append(row);
+      }
+    } else {
+      alert("Nhap so luong!!!");
+    }
+  }
+
+function containsIngredient(ingredient, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i].idrecipeIngredient == ingredient) {
+            return true;
+        }
+    }
+    return false;
+}

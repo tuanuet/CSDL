@@ -18,6 +18,16 @@ router.get('/recipe', function(req, res) {
 		res.json(recipe)
 	})
 });
+
+/**
+	* show json cho tuan
+	**/
+router.post('/showjson', function(req, res) {
+		console.log('body: ' + JSON.stringify(req.body));
+		res.send(req.body);
+});
+
+
 /*
 * lam theo tung cong doan
 * b1: Indert FoodCate xem co ko ?  neu co thi tra ve 304 , neu khong thi =>B2
@@ -61,7 +71,7 @@ function findIngredientByName(recipe,req,res,next) {
 	var names = new Array();
 	//dua tat ca ca Ingredient name vao mang name
 	names.push(req.body.Ingredient)
-	
+
 	console.log(names)
 	models.Ingredients.findIngredientByName(names,function (ingredient) {
 		var Obj = {
