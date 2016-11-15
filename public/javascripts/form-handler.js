@@ -1,7 +1,7 @@
 var listIngredient = new Array();
 
 $(document).ready(function() {
-  $('#submitButton').click(submitRecipeToDB);
+  $('#submitRecipe').click(submitRecipeToDB);
   $('#addIngredient').click(addIngredientToRecipe);
 });
 
@@ -10,31 +10,31 @@ $(document).ready(function() {
 */
 function submitRecipeToDB(evt) {
      var testForm = document.getElementById('recipe-form');
+     alert(listIngredient);
       //prevent form submission
       evt.preventDefault();
       evt.stopPropagation();
-      alert(listIngredient);
+
       var recipe = {
-    		RecipeName: document.getElementById('recipeName'),
-    		RecipeDescription: document.getElementById('RecipeDescription'),
-    		Source: document.getElementById('Source'),
-    		Vegetarian: parseInt(document.getElementById('Vegeterian')),
-    		NumberOfServings : document.getElementById('NumberOfServings'),
-    		TimeToPrepare: document.getElementById('TimeToPrepare'),
-    		CaloriesPerServing: document.getElementById('CaloriesPerServing'),
-    		NutritionalInformation: document.getElementById('NutritionalInformation'),
-    		Instructions: document.getElementById('Instructions'),
-    		Utensils: document.getElementById('Utensils'),
-    		list : new Array(),
+    		RecipeName: $('#recipename').val(),
+    		RecipeDescription: $('#RecipeDescription').val(),
+    		Source: $('#Source').val(),
+    		Vegetarian: $('input[name=Vegeterian]:checked', '#Vegeterian').val(),
+    		NumberOfServings : $('#NumberOfServings').val(),
+    		TimeToPrepare: $('#timetoprepare').val(),
+    		CaloriesPerServing: $('#CaloriesPerServing').val(),
+    		NutritionalInformation: $('#NutritionalInformation').val(),
+    		Instructions: $('#instructions').val(),
+    		Utensils: $('#Utensils').val(),
+    		list : listIngredient,
     	}
 
       //make the AJAX call
       $.ajax({
         url: '/showjson',
-				type: 'POST',
+				type: 'post',
         data: JSON.stringify(recipe),
 			  contentType: 'application/json',
-        url: 'http://localhost:3000/showjson',
         success: function(data) {
                 console.log('success');
                 console.log(JSON.stringify(recipe));
