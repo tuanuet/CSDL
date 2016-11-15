@@ -36,11 +36,13 @@ router.post('/showjson', function(req, res) {
 * B4: Insert vao bang RecipeIngredient vs 2 tham so idRecipe vs idIngredient
 * B5: send 1 json stuatus ve
 * */
-router.post('/insert',insertFoodCate,insertRecipe,findIngredientByName,insertToRecipeIngredient,function(req, res) {
-	res.send("ok")
+router.post('/insert',insertFoodCate,insertRecipe,insertToRecipeIngredient,function(req, res) {
+	res.send({
+		status: 200,
+		redirect : "/allfood"
+	})
 });
 function insertFoodCate(req,res,next) {
-
 	models.Foodcategories.insertFoodCategory(req.body.FoodCategories,function (food) {
 		return next(food);
 	})
@@ -52,52 +54,56 @@ function insertRecipe(food,req,res,next) {
 		RecipeName: body.RecipeName,
 		RecipeDescription: body.RecipeDescription,
 		Source: body.Source,
-		Vegetarian: parseInt(body.Vegeterian),
-		NumberOfServings : body.NumberOfServings,
-		TimeToPrepare: body.TimeToPrepare,
-		CaloriesPerServing: body.CaloriesPerServing,
+		Vegetarian: parseInt(body.Vegetarian),
+		NumberOfServings : parseInt(body.NumberOfServings),
+		TimeToPrepare: parseInt(body.TimeToPrepare),
+		CaloriesPerServing: parseInt(body.CaloriesPerServing),
 		NutritionalInformation: body.NutritionalInformation,
 		Instructions: body.Instructions,
 		Utensils: body.Utensils,
 		FoodcategoryIdFoodCategories : idFoodCate
 	}
 	models.Recipes.insertRecipe(recipe,function (recipe) {
-
 		return next(recipe)
 	})
 
 }
-function findIngredientByName(recipe,req,res,next) {
-	var names = new Array();
-	//dua tat ca ca Ingredient name vao mang name
-	names.push(req.body.Ingredient)
+// function findIngredientByName(recipe,req,res,next) {
+//
+// 	var names = new Array();
+// 	//dua tat ca ca Ingredient name vao mang name
+// 	names.push(req.body.Ingredient)
+//
+// 	console.log(names)
+// 	models.Ingredients.findIngredientByName(names,function (ingredient) {
+// 		var Obj = {
+// 			idRecipe : recipe[0].dataValues.idRecipe,
+// 			Ingredient : ingredient
+// 		}
+// 		return next(Obj);
+// 	})
+// }
 
-	console.log(names)
-	models.Ingredients.findIngredientByName(names,function (ingredient) {
-		var Obj = {
-			idRecipe : recipe[0].dataValues.idRecipe,
-			Ingredient : ingredient
-		}
-		return next(Obj);
-	})
-}
-function insertToRecipeIngredient(data,req,res,next) {
-	var Ingredients = data.Ingredient;
+function insertToRecipeIngredient(recipe,req,res,next) {
+	var idRecipe = recipe[0].dataValues.idRecipe;
+	var listRecipeIngredient = req.body.list;
+
+	console.log(idRecipe)
+	console.log(listRecipeIngredient)
 	var dataValidate = new Array();
-	for(var i=0;i<Ingredients.length;i++){
+	for(var i=0;i<listRecipeIngredient.length;i++){
 		var RecordRecipeIngredients = {
-			IngredientIdIngredient: Ingredients[i].dataValues.idIngredient,
-			RecipeIdRecipe: data.idRecipe,
-			Comments: req.body.Comments, //comment va quantity lay trong mang
-			Quantity: req.body.Quantity
+			IngredientIdIngredient: parseInt(listRecipeIngredient[i].idIngredient),
+			RecipeIdRecipe: idRecipe,
+			Comments: listRecipeIngredient[i].Comments, //comment va quantity lay trong mang
+			Quantity: parseInt(listRecipeIngredient[i].Quantity)
 		}
 		dataValidate.push(RecordRecipeIngredients)
 	}
-	models.Recipeingredients.insertRecipeIngredients(dataValidate,function (RecipeIngredient,isLast) {
-		if(isLast == true){
-			console.log("Insert thanh cong")
-		}
-		return next();
+	models.Recipeingredients.insertRecipeIngredients(dataValidate,function (isLast) {
+		console.log(isLast)
+		if (isLast == true)
+			return next();
 	})
 
 }

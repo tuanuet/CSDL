@@ -50,7 +50,6 @@ module.exports = function(sequelize, DataTypes) {
                 }).then(callback)
             },
             insertRecipeIngredients : function (data,callback) {
-
                 for(var i=0;i<data.length;i++){
                     Recipeingredient.findOrCreate({
                         where : {
@@ -59,11 +58,16 @@ module.exports = function(sequelize, DataTypes) {
                             Comments : data[i].Comments, //comment va quantity lay trong mang
                             Quantity: data[i].Quantity
                         }
-                    }).then(function (recipeIngredient) {
-                        if(i==data.length){
-                            callback(recipeIngredient,true)
-                        }else {
-                            callback(recipeIngredient,false)
+                    }).then(function (RecipeIngre,isInsert) {
+
+                        //console.log(RecipeIngre[0].dataValues.IngredientIdIngredient)
+                         console.log(data[data.length-1].IngredientIdIngredient)
+                        var b = data[data.length-1].IngredientIdIngredient
+                        var a = RecipeIngre[0].dataValues.IngredientIdIngredient;
+                        if(a == b){
+                            callback(true)
+                        }else{
+                            callback(false)
                         }
                     })
                 }

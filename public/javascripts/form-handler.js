@@ -10,13 +10,14 @@ $(document).ready(function() {
 */
 function submitRecipeToDB(evt) {
      var testForm = document.getElementById('recipe-form');
-     alert(listIngredient);
+
       //prevent form submission
       evt.preventDefault();
       evt.stopPropagation();
 
       var recipe = {
     		RecipeName: $('#recipename').val(),
+            FoodCategories: $('#FoodCategories').val(),
     		RecipeDescription: $('#RecipeDescription').val(),
     		Source: $('#Source').val(),
     		Vegetarian: $('input[name=Vegeterian]:checked', '#Vegeterian').val(),
@@ -31,13 +32,12 @@ function submitRecipeToDB(evt) {
 
       //make the AJAX call
       $.ajax({
-        url: '/showjson',
+        url: '/insert',
 				type: 'post',
         data: JSON.stringify(recipe),
 			  contentType: 'application/json',
         success: function(data) {
-                console.log('success');
-                console.log(JSON.stringify(recipe));
+            window.location = data.redirect
         }
       });
   }
@@ -52,7 +52,7 @@ function submitRecipeToDB(evt) {
                   + '</td><td>'+ document.getElementById('comments').value
                   + ' </td></tr>';
         listIngredient.push({
-            idrecipeIngredient: ingre.selectedIndex,
+            idIngredient: ingre.selectedIndex,
             Quantity: document.getElementById('quantity').value ,
             Comments: document.getElementById('comments').value
         });
