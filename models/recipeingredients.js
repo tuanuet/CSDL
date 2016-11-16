@@ -86,6 +86,13 @@ module.exports = function(sequelize, DataTypes) {
                         }
                     })
                 }
+            },
+            findRecipeIngredientByIdRecipe : function (id,callback) {
+                Recipeingredient.findAll({
+                    where : {
+                        RecipeIdRecipe : id
+                    }
+                }).then(callback)
             }
         }
     });

@@ -19,13 +19,7 @@ router.get('/recipe', function(req, res) {
 	})
 });
 
-/**
-	* show json cho tuan
-	**/
-router.post('/showjson', function(req, res) {
-		console.log('body: ' + JSON.stringify(req.body));
-		res.send(req.body);
-});
+
 
 
 /*
@@ -121,14 +115,16 @@ router.post('/delete',deleteRecipeIngredient,deleteRecipe,function (req,res) {
 	})
 })
 function deleteRecipeIngredient(req,res,next) {
-	var ids = new Array();
-	ids.push(37)
-	models.Recipeingredients.deleteRecipeIngredients(ids,function (recipeIngredient,isLast) {
-		if(isLast==true){
-			console.log(recipeIngredient)
-			return next();
-		}
+	var idRecipe = req.body.idRecipe;
+	models.Recipeingredients.findRecipeIngredientByIdRecipe(idRecipe,function (all) {
+		console.log(all.length)
 	})
+	// models.Recipeingredients.deleteRecipeIngredients(ids,function (recipeIngredient,isLast) {
+	// 	if(isLast==true){
+	// 		console.log(recipeIngredient)
+	// 		return next();
+	// 	}
+	// })
 }
 function deleteRecipe(req,res,next) {
 	var idRecipe = 41
