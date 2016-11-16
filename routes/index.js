@@ -140,7 +140,10 @@ router.get('/food', function(req, res) {
     var idRecipe = req.query.id;
     console.log(idRecipe)
 	models.Recipes.findRecipeById(idRecipe,models,function (recipeFood) {
-		res.json(recipeFood)
+		res.render('chitietthucan',{
+			title : "Chi tiết thức ăn",
+			Recipe : recipeFood
+		})
 	})
 });
 router.get('/ingredient', function(req, res) {
