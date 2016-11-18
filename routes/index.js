@@ -104,31 +104,26 @@ function insertToRecipeIngredient(recipe,req,res,next) {
 
 /*
  * lam theo tung con doan
- * B1: delete bang RecipeIngredient with id
- * B2: Delete Recipe with id
+ * B1: delete bang RecipeIngredient with idRecipe
+ * B2: Delete Recipe with idRecipe
  * B3: send 1 status ve
  */
 router.post('/delete',deleteRecipeIngredient,deleteRecipe,function (req,res) {
 	res.json({
 		status : 200,
-		msg : "Delete thanh cong"
+		msg : "Delete thanh cong",
+		redirect: '/allfood'
 	})
 })
 function deleteRecipeIngredient(req,res,next) {
 	var idRecipe = req.body.idRecipe;
-	models.Recipeingredients.findRecipeIngredientByIdRecipe(idRecipe,function (all) {
-		console.log(all.length)
+	models.Recipeingredients.deleteRecipeIngredientByIdRecipe(idRecipe,function () {
+		return next();
 	})
-	// models.Recipeingredients.deleteRecipeIngredients(ids,function (recipeIngredient,isLast) {
-	// 	if(isLast==true){
-	// 		console.log(recipeIngredient)
-	// 		return next();
-	// 	}
-	// })
 }
 function deleteRecipe(req,res,next) {
-	var idRecipe = 41
-	models.Recipes.deleteRecipe(idRecipe,function (arg1,arg2) {
+	var idRecipe = req.body.idRecipe;
+	models.Recipes.deleteRecipe(idRecipe,function () {
 		return next();
 	})
 }

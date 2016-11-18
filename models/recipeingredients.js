@@ -73,24 +73,17 @@ module.exports = function(sequelize, DataTypes) {
                 }
 
             },
-            deleteRecipeIngredients : function (ids,callback) {
-                for(var i=0;i<ids.length;i++){
-                    Recipeingredient.destroy({
-                        where : {idrecipeIngredient : ids[i]}
-                    })
-                    .then(function(recipeIngredient) {
-                        if(i==ids.length){
-                            callback(recipeIngredient,true)
-                        }else {
-                            callback(recipeIngredient,false)
-                        }
-                    })
-                }
-            },
             findRecipeIngredientByIdRecipe : function (id,callback) {
                 Recipeingredient.findAll({
                     where : {
                         RecipeIdRecipe : id
+                    }
+                }).then(callback)
+            },
+            deleteRecipeIngredientByIdRecipe : function (idRecipe,callback) {
+                this.destroy({
+                    where : {
+                        RecipeIdRecipe : idRecipe
                     }
                 }).then(callback)
             }

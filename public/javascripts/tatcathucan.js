@@ -14,7 +14,8 @@ $(document).ready(function() {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function(data) {
-                console.log("OK OK")
+                if(data.status == 200)
+                    window.location.reload();
             }
         });
     });
