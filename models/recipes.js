@@ -82,6 +82,25 @@ module.exports = function(sequelize, DataTypes) {
                     }
                 }).then(callback)
             },
+            updateRecipe : function(recipe, callback) {
+              Recipe.update({
+                RecipeName: recipe.RecipeName,
+                RecipeDescription: recipe.RecipeDescription,
+                Source: recipe.Source,
+                Vegetarian:recipe.Vegetarian ,
+                NumberOfServings : recipe.NumberOfServings,
+                TimeToPrepare: recipe.TimeToPrepare,
+                CaloriesPerServing: recipe.CaloriesPerServing,
+                NutritionalInformation: recipe.NutritionalInformation,
+                Instructions: recipe.Instructions,
+                Utensils: recipe.Utensils,
+                FoodcategoryIdFoodCategories : recipe.FoodcategoryIdFoodCategories
+              }, {
+                where : {
+                  idRecipe : recipe.idRecipe
+                }
+              }).then(callback)
+            },
             deleteRecipe : function (id,callback) {
                 Recipe.destroy({
                     where : {idRecipe : id}

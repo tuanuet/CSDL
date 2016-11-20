@@ -11,13 +11,13 @@ $(document).ready(function() {
 function submitRecipeToDB(evt) {
      var testForm = document.getElementById('recipe-form');
 
-      //prevent form submission
-      evt.preventDefault();
-      evt.stopPropagation();
+      // //prevent form submission
+      // evt.preventDefault();
+      // evt.stopPropagation();
 
       var recipe = {
     		RecipeName: $('#recipename').val(),
-            FoodCategories: $('#FoodCategories').val(),
+        FoodCategories: $('#FoodCategories').val(),
     		RecipeDescription: $('#RecipeDescription').val(),
     		Source: $('#Source').val(),
     		Vegetarian: $('input[name=Vegeterian]:checked', '#Vegeterian').val(),
@@ -37,7 +37,7 @@ function submitRecipeToDB(evt) {
         data: JSON.stringify(recipe),
 			  contentType: 'application/json',
         success: function(data) {
-            window.location = data.redirect
+              window.location.reload();
         }
       });
   }

@@ -79,7 +79,18 @@ module.exports = function(sequelize, DataTypes) {
                         RecipeIdRecipe : id
                     }
                 }).then(callback)
-            },
+             },
+            //{
+            //   updateRecipeingredients : function(listdata, callback) {
+            //     for (var data in listdata) {
+            //       Recipeingredient.updateAttributes({
+            //
+            //       }, {
+            //         where
+            //       })
+            //     }
+            //   }
+            // },
             deleteRecipeIngredientByIdRecipe : function (idRecipe,callback) {
                 this.destroy({
                     where : {
