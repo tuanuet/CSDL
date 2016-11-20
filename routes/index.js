@@ -2,15 +2,24 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
-
 router.get('/', function(req, res) {
+    models.Recipes.findAllRecipe(models,function (recipeFood) {
+        res.render('Tatcathucan',{
+                title : "Tất cả các món ăn",
+                Recipes : recipeFood
+            }
+        )
+
+    })
+});
+
+router.get('/insertRecipe', function(req, res) {
 	models.Ingredients.findAllIngredient(function (ingredients) {
 		res.render('Themthucan',{
-			title: "Insert Recipe",
+			title: "Thêm công thức - Insert Recipe",
 			Ingredients : ingredients
 		})
 	})
-
 });
 
 router.get('/recipe', function(req, res) {
@@ -33,7 +42,7 @@ router.get('/recipe', function(req, res) {
 router.post('/insert',insertFoodCate,insertRecipe,insertToRecipeIngredient,function(req, res) {
 	res.send({
 		status: 200,
-		redirect : "/allfood"
+		redirect : "/"
 	})
 });
 function insertFoodCate(req,res,next) {
@@ -62,21 +71,6 @@ function insertRecipe(food,req,res,next) {
 	})
 
 }
-// function findIngredientByName(recipe,req,res,next) {
-//
-// 	var names = new Array();
-// 	//dua tat ca ca Ingredient name vao mang name
-// 	names.push(req.body.Ingredient)
-//
-// 	console.log(names)
-// 	models.Ingredients.findIngredientByName(names,function (ingredient) {
-// 		var Obj = {
-// 			idRecipe : recipe[0].dataValues.idRecipe,
-// 			Ingredient : ingredient
-// 		}
-// 		return next(Obj);
-// 	})
-// }
 
 function insertToRecipeIngredient(recipe,req,res,next) {
 	var idRecipe = recipe[0].dataValues.idRecipe;
@@ -142,15 +136,5 @@ router.get('/ingredient', function(req, res) {
 		res.json(ingredients)
 	})
 });
-router.get('/allfood', function(req, res) {
-    models.Recipes.findAllRecipe(models,function (recipeFood) {
-        res.render('Tatcathucan',
-            {
-                title : "Tất cả các món ăn",
-                Recipes : recipeFood
-            }
-        )
 
-    })
-});
 module.exports = router;
