@@ -68,9 +68,9 @@
 						</tr>
 						<% for(var i=0;i<Recipe.Recipeingredients.length;i++) {%>
 							<tr class="danger">
-								<td><%= Recipe.Recipeingredients[i].Ingredient.Ingredient%></td>
-								<td><input class="form-control" type="number" value="<%= Recipe.Recipeingredients[i].Quantity%>"></td>
-								<td><input class="form-control" type="text" value="<%= Recipe.Recipeingredients[i].Comments%>"></td>
+								<td id="<%= Recipe.Recipeingredients[i].idIngredient + i%>"><%= Recipe.Recipeingredients[i].Ingredient.Ingredient%></td>
+								<td><input class="form-control" type="number" id="<%= Recipe.Recipeingredients[i].idIngredient + i*2 %>" value="<%= Recipe.Recipeingredients[i].Quantity%>"></td>
+								<td><input class="form-control" type="text" id="<%= Recipe.Recipeingredients[i].idIngredient + i*3 %>"value="<%= Recipe.Recipeingredients[i].Comments%>"></td>
 							</tr>
 						<%}%>
 					</table>

@@ -1,5 +1,9 @@
 $(document).ready(function() {
   $('#saveRecipe').click(function() {
+      var listIngre = $('.danger');
+      for (var ingre in listIngre) {
+
+      }
       var recipe = {
       idRecipe : document.getElementsByTagName("p")[0].innerHTML,
       RecipeName: $('#recipename').val(),
